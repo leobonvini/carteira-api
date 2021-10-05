@@ -1,11 +1,9 @@
 package br.com.alura.carteira.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +19,9 @@ public class TransacaoService {
 	private TransacaoRepository transacaoRepository;
 	ModelMapper modelMapper = new ModelMapper();
 	
-	public List<TransacaoDTO> listar(){
-		List<Transacao> transacoes = transacaoRepository.findAll();
-		return transacoes.stream().map(t -> modelMapper.map(t, TransacaoDTO.class)).collect(Collectors.toList());
+	public Page<TransacaoDTO> listar(Pageable paginacao){
+		Page<Transacao> transacoes = transacaoRepository.findAll(paginacao);
+		return transacoes.map(t -> modelMapper.map(t, TransacaoDTO.class));
 	}
 
 	@Transactional
