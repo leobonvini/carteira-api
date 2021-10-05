@@ -3,9 +3,11 @@ package br.com.alura.carteira.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.alura.carteira.dto.TransacaoDTO;
 import br.com.alura.carteira.dto.TransacaoFormDTO;
@@ -24,9 +26,12 @@ public class TransacaoService {
 		return transacoes.stream().map(t -> modelMapper.map(t, TransacaoDTO.class)).collect(Collectors.toList());
 	}
 
+	@Transactional
 	public void cadastrar(TransacaoFormDTO dto) {
 		
 		Transacao transacao = modelMapper.map(dto, Transacao.class);
+		transacao.setId(null);
+		
 		transacaoRepository.save(transacao);
 	}
 }
