@@ -25,7 +25,7 @@ public class UsuarioService {
 		return usuarios.map(t -> modelMapper.map(t, UsuarioDTO.class));
 
 	}
-	public void cadastrar(UsuarioFormDTO dto) {
+	public UsuarioDTO cadastrar(UsuarioFormDTO dto) {
 		
 		Usuario usuario = modelMapper.map(dto, Usuario.class);
 		
@@ -33,6 +33,8 @@ public class UsuarioService {
 		usuario.setSenha(senha);
 		
 		usuarioRepository.save(usuario);
+		
+		return modelMapper.map(usuario, UsuarioDTO.class);
 		
 	}
 }
