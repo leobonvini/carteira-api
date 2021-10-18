@@ -1,5 +1,7 @@
 package br.com.alura.carteira.service;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,13 +37,18 @@ public class TransacaoService {
 	@Transactional
 	public TransacaoDTO cadastrar(TransacaoFormDTO dto) {
 		Long idUsuario = dto.getUsuarioId();
-		Usuario usuario = usuarioRepository.getById(idUsuario);
 		
-		Transacao transacao = modelMapper.map(dto, Transacao.class);
-		transacao.setId(null);
-		transacao.setUsuario(usuario);
-		
-		transacaoRepository.save(transacao);
-		return modelMapper.map(transacao, TransacaoDTO.class);
+		try {
+			Usuario usuario = usuarioRepository.getById(idUsuario);
+			Transacao transacao = modelMapper.map(dto, Transacao.class);
+			transacao.setId(null);
+			transacao.setUsuario(usuario);
+			
+			transacaoRepository.save(transacao);
+			
+			return modelMapper.map(transacao, TransacaoDTO.class);
+		} catch (EntityNotFoundException e) {
+			throw new IllegalArgumentException("usuario inexistente!");
+		}
 	}
 }
