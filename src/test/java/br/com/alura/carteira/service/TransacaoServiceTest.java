@@ -52,7 +52,7 @@ class TransacaoServiceTest {
 		
 		TransacaoDTO dto = service.cadastrar(formDto);
 		
-		Mockito.verify(transacaoRepository.save(Mockito.any()));
+		Mockito.verify(transacaoRepository).save(Mockito.any());
 		
 		assertEquals(formDto.getTicker(), dto.getTicker());
 		assertEquals(formDto.getPreco(), dto.getPreco());
