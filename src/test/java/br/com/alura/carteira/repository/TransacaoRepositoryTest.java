@@ -86,7 +86,8 @@ class TransacaoRepositoryTest {
 				Assertions.tuple("ITSA4", 90l, 0.285714),
 				Assertions.tuple("BBSE3", 80l, 0.253968),
 				Assertions.tuple("EGIE3", 25l, 0.079365),
-				Assertions.tuple("SAPR4", 120l, 0.380952));
+				Assertions.tuple("SAPR4", 120l, 0.380952)
+				);
 		
 		
 		
