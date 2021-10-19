@@ -15,8 +15,6 @@ import br.com.alura.carteira.modelo.Transacao;
 import br.com.alura.carteira.modelo.Usuario;
 import br.com.alura.carteira.repository.TransacaoRepository;
 import br.com.alura.carteira.repository.UsuarioRepository;
-import lombok.Getter;
-import lombok.Setter;
 
 @Service
 public class TransacaoService {
