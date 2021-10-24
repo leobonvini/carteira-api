@@ -19,9 +19,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.alura.carteira.dto.UsuarioDTO;
 import br.com.alura.carteira.dto.UsuarioFormDTO;
 import br.com.alura.carteira.service.UsuarioService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/usuarios")
+@Api(tags= "Usuario")
 public class UsuarioController {
 
 
@@ -29,12 +32,14 @@ public class UsuarioController {
 	private UsuarioService service;
 
 	@GetMapping
+	@ApiOperation("Listar usuarios")
 	public Page<UsuarioDTO> listar(@PageableDefault(size = 10) Pageable paginacao) {
 		return service.listar(paginacao);
 		
 	}
 
 	@PostMapping
+	@ApiOperation("Cadastrar novo usuario")
 	public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioFormDTO dto,
 			UriComponentsBuilder uriBuilder) {
 		UsuarioDTO usuarioDTO = service.cadastrar(dto);
