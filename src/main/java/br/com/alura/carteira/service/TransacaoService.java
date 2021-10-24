@@ -1,6 +1,7 @@
 package br.com.alura.carteira.service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.NotNull;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.alura.carteira.dto.AtualizacaoTransacaoFormDTO;
 import br.com.alura.carteira.dto.TransacaoDTO;
+import br.com.alura.carteira.dto.TransacaoDetalhadaDTO;
 import br.com.alura.carteira.dto.TransacaoFormDTO;
 import br.com.alura.carteira.modelo.Transacao;
 import br.com.alura.carteira.modelo.Usuario;
@@ -49,4 +52,48 @@ public class TransacaoService {
 			throw new IllegalArgumentException("usuario inexistente!");
 		}
 	}
+
+	@Transactional
+	public TransacaoDTO atualizar(AtualizacaoTransacaoFormDTO dto) {
+		Transacao transacao = transacaoRepository.getById(dto.getId());
+		
+		transacao.atualizarInformacaoes(
+				dto.getTicker(), 
+				dto.getPreco(), 
+				dto.getQuantidade(),
+				dto.getData(), 
+				dto.getTipo());
+		
+		return modelMapper.map(transacao, TransacaoDTO.class);
+	}
+
+	@Transactional
+	public void remover(@NotNull Long id) {
+		transacaoRepository.deleteById(id);
+		
+	}
+
+	public TransacaoDetalhadaDTO detalhar(Long id) {
+		Transacao transacao = transacaoRepository
+				.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException());
+		return modelMapper.map(transacao, TransacaoDetalhadaDTO.class);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

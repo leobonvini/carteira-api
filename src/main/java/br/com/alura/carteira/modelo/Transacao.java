@@ -51,6 +51,16 @@ public class Transacao {
 		this.tipo = tipo;
 		this.usuario = usuario;
 	}
+
+	public void atualizarInformacaoes(String ticker, BigDecimal preco, int quantidade, LocalDate data, 
+			TipoTransacao tipo) {
+				this.ticker = ticker;
+				this.preco = preco;
+				this.quantidade = quantidade;
+				this.data = data;
+				this.tipo = tipo;
+		
+	}
 	
 	
 }
