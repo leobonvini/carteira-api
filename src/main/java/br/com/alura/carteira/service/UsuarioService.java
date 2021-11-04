@@ -12,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.alura.carteira.dto.UsuarioDTO;
 import br.com.alura.carteira.dto.UsuarioFormDTO;
+import br.com.alura.carteira.modelo.Perfil;
 import br.com.alura.carteira.modelo.Usuario;
+import br.com.alura.carteira.repository.PerfilRepository;
 import br.com.alura.carteira.repository.UsuarioRepository;
 
 @Service
@@ -23,6 +25,9 @@ public class UsuarioService {
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private PerfilRepository perfilRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -36,6 +41,9 @@ public class UsuarioService {
 	public UsuarioDTO cadastrar(UsuarioFormDTO dto) {
 		
 		Usuario usuario = modelMapper.map(dto, Usuario.class);
+		
+		Perfil perfil = perfilRepository.getById(dto.getPerfilId());
+		usuario.adicionarPerfil(perfil);
 		
 		String senha = new Random().nextInt(999999) + "";
 		usuario.setSenha(bCryptPasswordEncoder.encode(senha));
