@@ -47,6 +47,7 @@ public class TransacaoController {
 			UriComponentsBuilder uriBuilder, @AuthenticationPrincipal Usuario logado) {
 		TransacaoDTO cadastrada = service.cadastrar(dto, logado);
 
+		
 		URI uri = uriBuilder
 				.path("/transacoes/{id}")
 				.buildAndExpand(cadastrada.getId())
