@@ -19,5 +19,6 @@ public class TransacaoDTO {
 	private BigDecimal preco;
 	private Integer quantidade;
 	private TipoTransacao tipo;
+	private BigDecimal imposto;
 
 }

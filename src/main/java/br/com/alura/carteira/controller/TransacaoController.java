@@ -27,6 +27,7 @@ import br.com.alura.carteira.dto.TransacaoDetalhadaDTO;
 import br.com.alura.carteira.dto.TransacaoFormDTO;
 import br.com.alura.carteira.modelo.Usuario;
 import br.com.alura.carteira.service.TransacaoService;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/transacoes")
@@ -37,14 +38,14 @@ public class TransacaoController {
 
 	@GetMapping
 	public Page<TransacaoDTO> listar(@PageableDefault(size = 10) Pageable paginacao
-			, @AuthenticationPrincipal Usuario logado) {
+			,@ApiIgnore  @AuthenticationPrincipal Usuario logado) {
 		return service.listar(paginacao, logado);
 
 	}
 
 	@PostMapping
 	public ResponseEntity<TransacaoDTO> cadastrar(@RequestBody @Valid TransacaoFormDTO dto,
-			UriComponentsBuilder uriBuilder, @AuthenticationPrincipal Usuario logado) {
+			UriComponentsBuilder uriBuilder, @ApiIgnore @AuthenticationPrincipal Usuario logado) {
 		TransacaoDTO cadastrada = service.cadastrar(dto, logado);
 
 		
@@ -58,7 +59,7 @@ public class TransacaoController {
 	
 	@PutMapping
 	public ResponseEntity<TransacaoDTO> atualizar(@RequestBody @Valid AtualizacaoTransacaoFormDTO dto
-			, @AuthenticationPrincipal Usuario logado) {
+			, @ApiIgnore @AuthenticationPrincipal Usuario logado) {
 		TransacaoDTO atualizada = service.atualizar(dto, logado);
 
 		return ResponseEntity.ok(atualizada);
@@ -67,7 +68,7 @@ public class TransacaoController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<TransacaoDTO> remover(@PathVariable @NotNull Long id
-			, @AuthenticationPrincipal Usuario logado) {
+			,@ApiIgnore  @AuthenticationPrincipal Usuario logado) {
 		service.remover(id, logado);
 
 		return ResponseEntity.noContent().build();
@@ -76,7 +77,7 @@ public class TransacaoController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<TransacaoDetalhadaDTO> detalhar(@PathVariable @NotNull Long id
-			, @AuthenticationPrincipal Usuario logado) {
+			,@ApiIgnore  @AuthenticationPrincipal Usuario logado) {
 		TransacaoDetalhadaDTO dto = service.detalhar(id, logado);
 
 		return ResponseEntity.ok(dto);
