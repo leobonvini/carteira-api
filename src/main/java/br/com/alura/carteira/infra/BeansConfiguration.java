@@ -1,4 +1,4 @@
-package br.com.alura.carteira.infra.security;
+package br.com.alura.carteira.infra;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
